@@ -1,0 +1,9 @@
+name = "arm64_semantics_p2m"
+defaultTargets = ["Definitions"]
+
+[leanOptions]
+autoImplicit = false
+
+[[lean_lib]]
+name = "Definitions"
+globs = ["Definitions.+"]
