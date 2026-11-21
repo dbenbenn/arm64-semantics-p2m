@@ -2,8 +2,9 @@
 """Check that the bundles elaborate to the same constants as upstream.
 
 Usage: compare_consts.py UPSTREAM_LEAN_PROJECT_DIR
-  UPSTREAM_LEAN_PROJECT_DIR: a built lake project containing upstream `Arm64.Trusted` (e.g.
-  ~/claude/crc32-pilot/lean, whose copy is byte-identical to upstream 8c8d371f).
+  UPSTREAM_LEAN_PROJECT_DIR: a lake project containing upstream `Arm64.Trusted`, such as the
+  `arm64-semantics` folder of a google-deepmind/code-verification checkout at commit
+  8c8d371f1962ac73435c8eb148678991f5c3470d (the script builds the modules it compares).
 Dumps every constant of the non-Surface modules (name, type, value as `Expr.dbgToString`) on
 both sides, normalizes module-name prefixes (`Arm64.Trusted.X.Y` vs `Definitions.Def_Arm64_X_Y`)
 and the intended rename `Step.extern` -> `Step.externHook`, and reports any difference.

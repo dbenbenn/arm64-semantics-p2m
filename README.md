@@ -2,9 +2,23 @@
 
 This repo republishes the trusted Lean semantics `Arm64.Trusted` from
 [google-deepmind/code-verification](https://github.com/google-deepmind/code-verification)
-(Apache 2.0, upstream commit `8c8d371f`, 2026-11-19) as prove2.me definition bundles. It is
-meant as a **reusable library** for prove2.me machine-code verification missions. The first
-mission to use it is zlib 1.3.1 CRC-32 on AArch64 (`dbenbenn/zlib-crc32-aarch64`).
+(Apache 2.0, upstream commit
+[`8c8d371f`](https://github.com/google-deepmind/code-verification/tree/8c8d371f1962ac73435c8eb148678991f5c3470d/arm64-semantics/Arm64/Trusted), 2026-11-19) as
+[prove2.me](https://prove2.me) definition bundles. It is meant as a **reusable library** for
+prove2.me machine-code verification missions. The first mission to use it is zlib 1.3.1 CRC-32
+on AArch64.
+
+This is a derived copy, not a fork: the bundles are generated from that upstream commit, and
+anyone can regenerate and check them (see [Tools](#tools)):
+
+```
+# from this repository's root
+git clone https://github.com/google-deepmind/code-verification
+git -C code-verification checkout 8c8d371f1962ac73435c8eb148678991f5c3470d
+python3 tools/make_bundles.py code-verification/arm64-semantics Definitions 8c8d371f   # regenerate
+python3 tools/check_bundles.py code-verification/arm64-semantics Definitions           # textual diff
+python3 tools/compare_consts.py code-verification/arm64-semantics                      # elaborated constants
+```
 
 ## What is published
 

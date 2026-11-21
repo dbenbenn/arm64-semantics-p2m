@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Turn DeepMind's `Arm64.Trusted` modules into prove2.me definition bundles.
 
-Usage: make_bundles.py UPSTREAM_ARM64_SEMANTICS_DIR OUT_DIR
+Usage: make_bundles.py UPSTREAM_ARM64_SEMANTICS_DIR OUT_DIR COMMIT
 
 Each module `Arm64/Trusted/<P>.lean` becomes `OUT_DIR/Def_Arm64_<P with / -> _>.lean`
 (`Arm64/Trusted.lean` becomes `Def_Arm64.lean`). The only changes, each marked in a notice
@@ -16,7 +16,7 @@ inserted after the Apache header:
     in code as a native-code binding (probe `CrcProbe_chain`, 2026-11-21).
   * every interpolated string `s!"c0{e1}c1…"` (all are error messages) is written out as its
     exact elaboration `(toString "c0" ++ toString (e1) ++ toString "c1" … : String)`, because
-    prove2.me rejects interpolated strings (dry run, 2026-11-21); tools/compare_consts.lean checks
+    prove2.me rejects interpolated strings (dry run, 2026-11-21); tools/compare_consts.py checks
     that the elaborated terms are identical.
 Nothing else in a file changes.
 """
