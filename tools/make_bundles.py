@@ -14,6 +14,10 @@ inserted after the Apache header:
   * the `Step` constructor `extern` is renamed `externHook` (declaration and the backticked
     `Step.extern` mentions in comments), because prove2.me's scanner rejects the token `extern`
     in code as a native-code binding (probe `CrcProbe_chain`, 2026-11-21).
+  * every interpolated string `s!"c0{e1}c1…"` (all are error messages) is written out as its
+    exact elaboration `(toString "c0" ++ toString (e1) ++ toString "c1" … : String)`, because
+    prove2.me rejects interpolated strings (dry run, 2026-11-21); tools/compare_consts.lean checks
+    that the elaborated terms are identical.
 Nothing else in a file changes.
 """
 import pathlib, re, sys
@@ -29,6 +33,38 @@ def mod_to_rel(mod: str) -> str:
     return "" if mod == "Arm64.Trusted" else mod[len("Arm64.Trusted."):].replace(".", "/")
 
 IMPORT_RE = re.compile(r"^(\s*)(public\s+)?(meta\s+)?import\s+(\S+)\s*$")
+
+def desugar_interp(text: str):
+    """Replace each s!"..." by its elaboration; returns (text, count)."""
+    out = []; i = 0; n = 0
+    while True:
+        j = text.find('s!"', i)
+        if j < 0: out.append(text[i:]); break
+        if j > 0 and (text[j-1].isalnum() or text[j-1] in "_."):
+            out.append(text[i:j+3]); i = j + 3; continue
+        out.append(text[i:j]); k = j + 3; chunks = []; lit = ""
+        while True:
+            c = text[k]
+            if c == "\\":
+                assert text[k+1] != "{", "escaped brace not handled"
+                lit += text[k:k+2]; k += 2
+            elif c == '"':
+                k += 1; break
+            elif c == "{":
+                if lit: chunks.append(("lit", lit)); lit = ""
+                depth = 1; m = k + 1
+                while depth:
+                    if text[m] == "{": depth += 1
+                    elif text[m] == "}": depth -= 1
+                    elif text[m] == '"': raise SystemExit("string inside interpolation not handled")
+                    m += 1
+                chunks.append(("term", text[k+1:m-1])); k = m
+            else:
+                lit += c; k += 1
+        if lit: chunks.append(("lit", lit))
+        parts = [f'toString "{v}"' if t == "lit" else f"toString ({v})" for t, v in chunks]
+        out.append("(" + " ++ ".join(parts) + " : String)"); i = k; n += 1
+    return "".join(out), n
 
 def transform(text: str, rel: str, commit: str):
     lines = text.split("\n")
@@ -53,6 +89,10 @@ def transform(text: str, rel: str, commit: str):
         seen.add(new)
         out.append(f"{ind}{pub or ''}import {new}")
     body = "\n".join(out)
+    body, ninterp = desugar_interp(body)
+    if ninterp:
+        notes.append(f"{ninterp} interpolated strings written out as their elaboration "
+                     "`toString … ++ …`, because prove2.me rejects interpolated strings")
     if "`Step.extern`" in body:
         body = body.replace("`Step.extern`", "`Step.externHook`")
         notes.append("the constructor `Step.extern` renamed `Step.externHook` in comments (see below)")

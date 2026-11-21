@@ -33,7 +33,11 @@ its Apache header:
 3. **`Step.extern` is renamed `Step.externHook`.** prove2.me's scanner rejects the token `extern`
    in code as a native-code binding, even as a constructor name. A private probe showed this
    too. The rename also covers the four backticked mentions in comments.
-4. **One `meta import` is removed.** `Process/Loader` had `public meta import` of a module it
+4. **Interpolated strings are written out.** The 69 `s!"…"` error messages, in `ISA_Decode`,
+   `ISA_Eval`, `Process_Loader` and `Process_Overrides`, become their exact elaboration
+   `(toString "…" ++ toString (e) ++ … : String)`. prove2.me rejects interpolated strings
+   ("interpolations embed executable terms the guard cannot scan"), as the dry run found.
+5. **One `meta import` is removed.** `Process/Loader` had `public meta import` of a module it
    already imports publicly, and the duplicate is dropped.
 
 ## Tools
@@ -42,6 +46,10 @@ its Apache header:
   upstream checkout. `UPSTREAM_DIR` is the `arm64-semantics` folder.
 - `tools/check_bundles.py UPSTREAM_DIR Definitions` checks that every bundle equals its
   upstream file apart from the changes above.
+- `tools/compare_consts.py UPSTREAM_LEAN_PROJECT` elaborates both sides and compares every
+  constant's type and value. On 2026-11-21 all 5,962 constants matched. The comparison ignores
+  hygienic binder names, module-name prefixes and the `extern` rename, none of which changes a
+  term.
 - `lake build` builds all 56 bundles on prove2.me's Lean `v4.33.1`, in about 25 s. The library
   needs no Mathlib.
 - `tools/dryrun_publish.py` publishes the bundles privately under the throwaway prefix

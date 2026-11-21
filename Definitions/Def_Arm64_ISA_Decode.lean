@@ -11,6 +11,7 @@ limitations under the License.
 MODIFIED for prove2.me (republication of DeepMind's `Arm64.Trusted`, upstream
 google-deepmind/code-verification commit 8c8d371f, file `Arm64/Trusted/ISA/Decode.lean`):
 every import of `Arm64.Trusted.<M>` renamed to the bundle `Definitions.Def_Arm64_<M>`.
+Also 14 interpolated strings written out as their elaboration `toString … ++ …`, because prove2.me rejects interpolated strings.
 No other change.
 -/
 
@@ -1210,14 +1211,14 @@ def describeUnsupportedWord (w : BitVec 32) : String :=
       | 13 => "SQDMULL/SQDMULL2"
       | 14 => "PMULL/PMULL2"
       | _  => "three-different"
-    s!"unsupported AdvSIMD encoding class three-different {mnem} (insn {insnHex}, q={q} u={if u then 1 else 0} size={size} opcode={opcode}) — not modeled in Arm64/Trusted/ISA"
+    (toString "unsupported AdvSIMD encoding class three-different " ++ toString (mnem) ++ toString " (insn " ++ toString (insnHex) ++ toString ", q=" ++ toString (q) ++ toString " u=" ++ toString (if u then 1 else 0) ++ toString " size=" ++ toString (size) ++ toString " opcode=" ++ toString (opcode) ++ toString ") — not modeled in Arm64/Trusted/ISA" : String)
   -- 2. AdvSIMD vector by-element (`0:Q:U:01111:size:L:M:Rm:opcode:H:0:Rn:Rd`)
   else if (w &&& 0x9f000400#32) == 0x0f000000#32 then
     let q := if w.getLsbD 30 then 1 else 0
     let u := if w.getLsbD 29 then 1 else 0
     let size := (w.extractLsb' 22 2).toNat
     let opcode := (w.extractLsb' 12 4).toNat
-    s!"unsupported AdvSIMD encoding class vector-by-element (insn {insnHex}, q={q} u={u} size={size} opcode={opcode}) — not modeled in Arm64/Trusted/ISA"
+    (toString "unsupported AdvSIMD encoding class vector-by-element (insn " ++ toString (insnHex) ++ toString ", q=" ++ toString (q) ++ toString " u=" ++ toString (u) ++ toString " size=" ++ toString (size) ++ toString " opcode=" ++ toString (opcode) ++ toString ") — not modeled in Arm64/Trusted/ISA" : String)
   -- 3. AdvSIMD scalar three-same (`01:U:11110:size:1:Rm:opcode:1:Rn:Rd`)
   else if (w &&& 0xdf200400#32) == 0x5e200400#32 then
     let u := w.getLsbD 29
@@ -1234,44 +1235,44 @@ def describeUnsupportedWord (w : BitVec 32) : String :=
       | 16 => if u then "SUB" else "ADD"
       | 17 => if u then "CMEQ" else "CMTST"
       | _  => "scalar-three-same"
-    s!"unsupported AdvSIMD encoding class scalar-three-same {mnem} (insn {insnHex}, u={if u then 1 else 0} size={size} opcode={opcode}) — scalar SIMD not modeled in Arm64/Trusted/ISA"
+    (toString "unsupported AdvSIMD encoding class scalar-three-same " ++ toString (mnem) ++ toString " (insn " ++ toString (insnHex) ++ toString ", u=" ++ toString (if u then 1 else 0) ++ toString " size=" ++ toString (size) ++ toString " opcode=" ++ toString (opcode) ++ toString ") — scalar SIMD not modeled in Arm64/Trusted/ISA" : String)
   -- 4. AdvSIMD scalar two-reg misc (`01:U:11110:size:10000:opcode:10:Rn:Rd`)
   else if (w &&& 0xdf3e0c00#32) == 0x5e200800#32 then
     let u := if w.getLsbD 29 then 1 else 0
     let size := (w.extractLsb' 22 2).toNat
     let opcode := (w.extractLsb' 12 5).toNat
-    s!"unsupported AdvSIMD encoding class scalar-two-reg-misc (insn {insnHex}, u={u} size={size} opcode={opcode}) — scalar SIMD not modeled in Arm64/Trusted/ISA"
+    (toString "unsupported AdvSIMD encoding class scalar-two-reg-misc (insn " ++ toString (insnHex) ++ toString ", u=" ++ toString (u) ++ toString " size=" ++ toString (size) ++ toString " opcode=" ++ toString (opcode) ++ toString ") — scalar SIMD not modeled in Arm64/Trusted/ISA" : String)
   -- 5. AdvSIMD scalar pairwise (`01:U:11110:size:11000:opcode:10:Rn:Rd`)
   else if (w &&& 0xdf3e0c00#32) == 0x5e300800#32 then
     let u := if w.getLsbD 29 then 1 else 0
     let size := (w.extractLsb' 22 2).toNat
     let opcode := (w.extractLsb' 12 5).toNat
-    s!"unsupported AdvSIMD encoding class scalar-pairwise (insn {insnHex}, u={u} size={size} opcode={opcode}) — scalar SIMD not modeled in Arm64/Trusted/ISA"
+    (toString "unsupported AdvSIMD encoding class scalar-pairwise (insn " ++ toString (insnHex) ++ toString ", u=" ++ toString (u) ++ toString " size=" ++ toString (size) ++ toString " opcode=" ++ toString (opcode) ++ toString ") — scalar SIMD not modeled in Arm64/Trusted/ISA" : String)
   -- 6. AdvSIMD scalar shift by immediate (`01:U:111110:immh:immb:opcode:1:Rn:Rd`)
   else if (w &&& 0xdf800400#32) == 0x5f000400#32 then
     let u := if w.getLsbD 29 then 1 else 0
     let immh := (w.extractLsb' 19 4).toNat
     let immb := (w.extractLsb' 16 3).toNat
     let opcode := (w.extractLsb' 11 5).toNat
-    s!"unsupported AdvSIMD encoding class scalar-shift-imm (insn {insnHex}, u={u} immh={immh} immb={immb} opcode={opcode}) — scalar SIMD not modeled in Arm64/Trusted/ISA"
+    (toString "unsupported AdvSIMD encoding class scalar-shift-imm (insn " ++ toString (insnHex) ++ toString ", u=" ++ toString (u) ++ toString " immh=" ++ toString (immh) ++ toString " immb=" ++ toString (immb) ++ toString " opcode=" ++ toString (opcode) ++ toString ") — scalar SIMD not modeled in Arm64/Trusted/ISA" : String)
   -- 7. AdvSIMD scalar three-different (`01:U:11110:size:1:Rm:opcode:00:Rn:Rd`)
   else if (w &&& 0xdf200c00#32) == 0x5e200000#32 then
     let u := if w.getLsbD 29 then 1 else 0
     let size := (w.extractLsb' 22 2).toNat
     let opcode := (w.extractLsb' 12 4).toNat
-    s!"unsupported AdvSIMD encoding class scalar-three-different (insn {insnHex}, u={u} size={size} opcode={opcode}) — scalar SIMD not modeled in Arm64/Trusted/ISA"
+    (toString "unsupported AdvSIMD encoding class scalar-three-different (insn " ++ toString (insnHex) ++ toString ", u=" ++ toString (u) ++ toString " size=" ++ toString (size) ++ toString " opcode=" ++ toString (opcode) ++ toString ") — scalar SIMD not modeled in Arm64/Trusted/ISA" : String)
   -- 8. AdvSIMD scalar by-element (`01:U:11111:size:L:M:Rm:opcode:H:0:Rn:Rd`)
   else if (w &&& 0xdf000400#32) == 0x5f000000#32 then
     let u := if w.getLsbD 29 then 1 else 0
     let size := (w.extractLsb' 22 2).toNat
     let opcode := (w.extractLsb' 12 4).toNat
-    s!"unsupported AdvSIMD encoding class scalar-by-element (insn {insnHex}, u={u} size={size} opcode={opcode}) — scalar SIMD not modeled in Arm64/Trusted/ISA"
+    (toString "unsupported AdvSIMD encoding class scalar-by-element (insn " ++ toString (insnHex) ++ toString ", u=" ++ toString (u) ++ toString " size=" ++ toString (size) ++ toString " opcode=" ++ toString (opcode) ++ toString ") — scalar SIMD not modeled in Arm64/Trusted/ISA" : String)
   -- 9. AdvSIMD scalar copy (`01:op:11110000:imm5:0:imm4:1:Rn:Rd`)
   else if (w &&& 0xdfe08400#32) == 0x5e000400#32 then
     let op := if w.getLsbD 29 then 1 else 0
     let imm5 := (w.extractLsb' 16 5).toNat
     let imm4 := (w.extractLsb' 11 4).toNat
-    s!"unsupported AdvSIMD encoding class scalar-copy (insn {insnHex}, op={op} imm5={imm5} imm4={imm4}) — scalar SIMD not modeled in Arm64/Trusted/ISA"
+    (toString "unsupported AdvSIMD encoding class scalar-copy (insn " ++ toString (insnHex) ++ toString ", op=" ++ toString (op) ++ toString " imm5=" ++ toString (imm5) ++ toString " imm4=" ++ toString (imm4) ++ toString ") — scalar SIMD not modeled in Arm64/Trusted/ISA" : String)
   -- 10. AdvSIMD multi-structure LD2-LD4 / ST2-ST4 (`0:Q:001100:p:L:0:Rm:opcode:size:Rn:Rt`)
   else if (w &&& 0xbfbf0000#32) == 0x0c000000#32 || (w &&& 0xbfa00000#32) == 0x0c800000#32 then
     let q := if w.getLsbD 30 then 1 else 0
@@ -1284,7 +1285,7 @@ def describeUnsupportedWord (w : BitVec 32) : String :=
       | 4 => if isLoad then "LD3" else "ST3"
       | 0 => if isLoad then "LD4" else "ST4"
       | _ => if isLoad then "LD2-LD4" else "ST2-ST4"
-    s!"unsupported AdvSIMD encoding class multi-structure {mnem} (insn {insnHex}, q={q} L={if isLoad then 1 else 0} opcode={opcode} size={size}) — multi-structure LD2-LD4/ST2-ST4 not modeled in Arm64/Trusted/ISA"
+    (toString "unsupported AdvSIMD encoding class multi-structure " ++ toString (mnem) ++ toString " (insn " ++ toString (insnHex) ++ toString ", q=" ++ toString (q) ++ toString " L=" ++ toString (if isLoad then 1 else 0) ++ toString " opcode=" ++ toString (opcode) ++ toString " size=" ++ toString (size) ++ toString ") — multi-structure LD2-LD4/ST2-ST4 not modeled in Arm64/Trusted/ISA" : String)
   -- 11. AdvSIMD single-structure LD1-LD4 / ST1-ST4 (`0:Q:001101:p:L:R:Rm:opcode:S:size:Rn:Rt`)
   else if (w &&& 0xbf800000#32) == 0x0d000000#32 then
     let q := if w.getLsbD 30 then 1 else 0
@@ -1292,15 +1293,15 @@ def describeUnsupportedWord (w : BitVec 32) : String :=
     let rBit := if w.getLsbD 21 then 1 else 0
     let opcode := (w.extractLsb' 13 3).toNat
     let size := (w.extractLsb' 10 2).toNat
-    s!"unsupported AdvSIMD encoding class single-structure LD1-LD4/ST1-ST4 (insn {insnHex}, q={q} L={isLoad} R={rBit} opcode={opcode} size={size}) — not modeled in Arm64/Trusted/ISA"
+    (toString "unsupported AdvSIMD encoding class single-structure LD1-LD4/ST1-ST4 (insn " ++ toString (insnHex) ++ toString ", q=" ++ toString (q) ++ toString " L=" ++ toString (isLoad) ++ toString " R=" ++ toString (rBit) ++ toString " opcode=" ++ toString (opcode) ++ toString " size=" ++ toString (size) ++ toString ") — not modeled in Arm64/Trusted/ISA" : String)
   -- 12. SVE (`op0 = 0010`)
   else if (w &&& 0x1e000000#32) == 0x04000000#32 then
-    s!"unsupported SVE instruction (insn {insnHex}) — SVE not modeled in Arm64/Trusted/ISA"
+    (toString "unsupported SVE instruction (insn " ++ toString (insnHex) ++ toString ") — SVE not modeled in Arm64/Trusted/ISA" : String)
   else
-    s!"unsupported instruction encoding (insn {insnHex}) — not modeled in Arm64/Trusted/ISA"
+    (toString "unsupported instruction encoding (insn " ++ toString (insnHex) ++ toString ") — not modeled in Arm64/Trusted/ISA" : String)
 
 /-- Format a descriptive unsupported/undecodable error at `addr` for raw 32-bit word `w`. -/
 def describeUnsupportedAt (addr : BitVec 64) (w : BitVec 32) : String :=
-  s!"at {hexAddr64 addr}: {describeUnsupportedWord w}"
+  (toString "at " ++ toString (hexAddr64 addr) ++ toString ": " ++ toString (describeUnsupportedWord w) : String)
 
 end Arm64

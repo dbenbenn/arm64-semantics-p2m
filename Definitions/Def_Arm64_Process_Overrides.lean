@@ -11,6 +11,7 @@ limitations under the License.
 MODIFIED for prove2.me (republication of DeepMind's `Arm64.Trusted`, upstream
 google-deepmind/code-verification commit 8c8d371f, file `Arm64/Trusted/Process/Overrides.lean`):
 every import of `Arm64.Trusted.<M>` renamed to the bundle `Definitions.Def_Arm64_<M>`.
+Also 4 interpolated strings written out as their elaboration `toString … ++ …`, because prove2.me rejects interpolated strings.
 No other change.
 -/
 
@@ -124,10 +125,10 @@ def resolveSym (img : ElfImage) (syms : List ElfSym) (shdrs : List ElfShdr) (nam
           sh.addr ≤ e.value && e.value + e.size ≤ sh.addr + sh.size &&
           img.segments.any (fun r => r.perm.x && r.start.toNat ≤ e.value &&
             e.value + e.size ≤ r.start.toNat + r.bytes.length) then .ok e.value
-      else .error s!"override {name}: not a sized, aligned function in executable code"
-    | none => .error s!"override {name}: bad st_shndx"
-  | [] => .error s!"override {name}: no .symtab entry"
-  | _ => .error s!"override {name}: duplicate .symtab entries"
+      else .error (toString "override " ++ toString (name) ++ toString ": not a sized, aligned function in executable code" : String)
+    | none => .error (toString "override " ++ toString (name) ++ toString ": bad st_shndx" : String)
+  | [] => .error (toString "override " ++ toString (name) ++ toString ": no .symtab entry" : String)
+  | _ => .error (toString "override " ++ toString (name) ++ toString ": duplicate .symtab entries" : String)
 
 /-- Resolve each name in `names` (`resolveSym`); fails unless the names and the resolved addresses
     are pairwise distinct. -/

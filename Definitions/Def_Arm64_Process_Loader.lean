@@ -12,6 +12,7 @@ MODIFIED for prove2.me (republication of DeepMind's `Arm64.Trusted`, upstream
 google-deepmind/code-verification commit 8c8d371f, file `Arm64/Trusted/Process/Loader.lean`):
 every import of `Arm64.Trusted.<M>` renamed to the bundle `Definitions.Def_Arm64_<M>`.
 Also removed `public meta import Arm64.Trusted.Process.Types` (already imported).
+Also 6 interpolated strings written out as their elaboration `toString … ++ …`, because prove2.me rejects interpolated strings.
 No other change.
 -/
 
@@ -214,7 +215,7 @@ def parseProgramHeader (bytes : List (BitVec 8)) (fileSize : Nat) (ph : List (Bi
         else 0#64
       pure (insertRegionSorted reg accRegions, phdrVaddr', Nat.max accMaxEnd pageEnd)
   else
-    .error s!"ElfImage.parse: unsupported program header type {pType}"
+    .error (toString "ElfImage.parse: unsupported program header type " ++ toString (pType) : String)
 
 /-- Parse `ePhnum` 56-byte program headers from `phTable`. -/
 def parseProgramHeaders (bytes : List (BitVec 8)) (fileSize ePhoff ePhBytes : Nat) :
@@ -279,7 +280,7 @@ def parseSymtab (bytes : List (BitVec 8)) (fileSize eShoff eShentsize eShnum : N
     pure []
   else
     if eShentsize != 64 then
-      .error s!"ElfImage.parse: expected e_shentsize=64, got {eShentsize}"
+      .error (toString "ElfImage.parse: expected e_shentsize=64, got " ++ toString (eShentsize) : String)
     let eShBytes := eShnum * 64
     if eShoff + eShBytes > fileSize then
       .error "ElfImage.parse: section header table exceeds file size"
@@ -288,7 +289,7 @@ def parseSymtab (bytes : List (BitVec 8)) (fileSize eShoff eShentsize eShnum : N
     | none => pure []
     | some (shOffset, shSize, shLink, shInfo, shEntsize) =>
       if shEntsize != 24 then
-        .error s!"ElfImage.parse: expected SHT_SYMTAB sh_entsize=24, got {shEntsize}"
+        .error (toString "ElfImage.parse: expected SHT_SYMTAB sh_entsize=24, got " ++ toString (shEntsize) : String)
       if shOffset + shSize > fileSize then
         .error "ElfImage.parse: SHT_SYMTAB section exceeds file size"
       if shSize % 24 != 0 then
@@ -340,11 +341,11 @@ def ElfImage.parse (bytes : List (BitVec 8)) : Except String ElfImage := do
   let eShentsize := listReadU16LE bytes 58
   let eShnum     := listReadU16LE bytes 60
   if eType != 2 then
-    .error s!"ElfImage.parse: expected static ET_EXEC (2), got e_type={eType}"
+    .error (toString "ElfImage.parse: expected static ET_EXEC (2), got e_type=" ++ toString (eType) : String)
   if eMachine != 183 then
-    .error s!"ElfImage.parse: expected EM_AARCH64 (183), got e_machine={eMachine}"
+    .error (toString "ElfImage.parse: expected EM_AARCH64 (183), got e_machine=" ++ toString (eMachine) : String)
   if ePhentsize != 56 then
-    .error s!"ElfImage.parse: expected e_phentsize=56, got {ePhentsize}"
+    .error (toString "ElfImage.parse: expected e_phentsize=56, got " ++ toString (ePhentsize) : String)
   if ePhnum == 0 then
     .error "ElfImage.parse: e_phnum is 0"
   let ePhBytes := ePhnum * 56

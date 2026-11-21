@@ -11,6 +11,7 @@ limitations under the License.
 MODIFIED for prove2.me (republication of DeepMind's `Arm64.Trusted`, upstream
 google-deepmind/code-verification commit 8c8d371f, file `Arm64/Trusted/ISA/Eval.lean`):
 every import of `Arm64.Trusted.<M>` renamed to the bundle `Definitions.Def_Arm64_<M>`.
+Also 45 interpolated strings written out as their elaboration `toString … ++ …`, because prove2.me rejects interpolated strings.
 No other change.
 -/
 
@@ -883,7 +884,7 @@ def evalCryptoSha2Reg (opcode : BitVec 5) (vd vn : BitVec 128) : Except String (
       acc ||| (out.zeroExtend 128 <<< (e * 32))) 0#128
     pure res
   | _ =>
-    throw s!"unsupported AdvSIMD: cryptoSha2Reg (opcode=0x{String.ofList (Nat.toDigits 16 opcode.toNat)}) — architecturally UNDEFINED"
+    throw (toString "unsupported AdvSIMD: cryptoSha2Reg (opcode=0x" ++ toString (String.ofList (Nat.toDigits 16 opcode.toNat)) ++ toString ") — architecturally UNDEFINED" : String)
 
 /-- Evaluate `FEAT_SHA1`/`FEAT_SHA256` 3-register SHA instructions (`cryptoSha3Reg`,
     ASL `A64.simd_dp.cryptosha3`):
@@ -933,7 +934,7 @@ def evalCryptoSha3Reg (opcode : BitVec 3) (vd vn vm : BitVec 128) : Except Strin
     let r3 := sigma1 r1 + vd.extractLsb' 96 32 + t0.extractLsb' 96 32
     pure (r3 ++ r2 ++ r1 ++ r0)
   else
-    throw s!"unsupported AdvSIMD: cryptoSha3Reg (opcode=0x{String.ofList (Nat.toDigits 16 opcode.toNat)}) — architecturally UNDEFINED"
+    throw (toString "unsupported AdvSIMD: cryptoSha3Reg (opcode=0x" ++ toString (String.ofList (Nat.toDigits 16 opcode.toNat)) ++ toString ") — architecturally UNDEFINED" : String)
 
 /-- Evaluate `SHA512SU0 Vd.2D, Vn.2D` (`cryptoSha512Reg2`,
     ASL `A64.simd_dp.cryptosha512_2.SHA512SU0_VV2_cryptosha512_2`). -/
@@ -1283,9 +1284,9 @@ def evalSimdModImmExt (q op : Bool) (immb : BitVec 3) (opc : BitVec 5) (rn : Bit
   let cmode := opc.extractLsb' 1 4
   if o2 then
     if !op && cmode == 0b1111#4 then
-      .error s!"unsupported AdvSIMD: simdImmShift vector-FP FMOV FP16 (q={if q then 1 else 0} op=0 cmode=1111 o2=1) — vector FP not modeled in Arm64/Trusted/ISA"
+      .error (toString "unsupported AdvSIMD: simdImmShift vector-FP FMOV FP16 (q=" ++ toString (if q then 1 else 0) ++ toString " op=0 cmode=1111 o2=1) — vector FP not modeled in Arm64/Trusted/ISA" : String)
     else
-      .error s!"unsupported AdvSIMD: simdImmShift modified-immediate (q={if q then 1 else 0} op={if op then 1 else 0} cmode={cmode.toNat} o2=1) — architecturally UNDEFINED"
+      .error (toString "unsupported AdvSIMD: simdImmShift modified-immediate (q=" ++ toString (if q then 1 else 0) ++ toString " op=" ++ toString (if op then 1 else 0) ++ toString " cmode=" ++ toString (cmode.toNat) ++ toString " o2=1) — architecturally UNDEFINED" : String)
   else
     let imm8 : BitVec 8 := immb ++ rn
     let imm64 := advSimdExpandImm op cmode imm8
@@ -1315,7 +1316,7 @@ def evalSimdModImmExt (q op : Bool) (immb : BitVec 3) (opc : BitVec 5) (rn : Bit
       else
         .error "unsupported AdvSIMD: simdImmShift modified-immediate (q=0 op=1 cmode=1111 o2=0) — architecturally UNDEFINED"
     else
-      .error s!"unsupported AdvSIMD: simdImmShift modified-immediate (q={if q then 1 else 0} op={if op then 1 else 0} cmode={cmode.toNat} o2=0) — architecturally UNDEFINED"
+      .error (toString "unsupported AdvSIMD: simdImmShift modified-immediate (q=" ++ toString (if q then 1 else 0) ++ toString " op=" ++ toString (if op then 1 else 0) ++ toString " cmode=" ++ toString (cmode.toNat) ++ toString " o2=0) — architecturally UNDEFINED" : String)
 
 /-- Evaluate AdvSIMD shift-by-immediate encodings (`simdImmShift` with `immh != 0`):
     `SSHR`/`USHR`, `SSRA`/`USRA`, `SRSHR`/`URSHR`, `SRSRA`/`URSRA`, `SRI`, `SHL`, `SLI`,
@@ -1383,9 +1384,9 @@ def evalSimdImmShiftNonZeroExt (q op : Bool) (immh : BitVec 4) (immb : BitVec 3)
     let mnem :=
       if opc == 0b11100#5 then (if op then "UCVTF" else "SCVTF")
       else (if op then "FCVTZU" else "FCVTZS")
-    .error s!"unsupported AdvSIMD: simdImmShift vector-FP fixed-point {mnem} (q={if q then 1 else 0} u={if op then 1 else 0} immh={immh.toNat} immb={immb.toNat} opcode={opc.toNat}) — vector FP not modeled in Arm64/Trusted/ISA"
+    .error (toString "unsupported AdvSIMD: simdImmShift vector-FP fixed-point " ++ toString (mnem) ++ toString " (q=" ++ toString (if q then 1 else 0) ++ toString " u=" ++ toString (if op then 1 else 0) ++ toString " immh=" ++ toString (immh.toNat) ++ toString " immb=" ++ toString (immb.toNat) ++ toString " opcode=" ++ toString (opc.toNat) ++ toString ") — vector FP not modeled in Arm64/Trusted/ISA" : String)
   else
-    .error s!"unsupported AdvSIMD: simdImmShift (q={if q then 1 else 0} u={if op then 1 else 0} immh={immh.toNat} immb={immb.toNat} opcode={opc.toNat}) — architecturally UNDEFINED"
+    .error (toString "unsupported AdvSIMD: simdImmShift (q=" ++ toString (if q then 1 else 0) ++ toString " u=" ++ toString (if op then 1 else 0) ++ toString " immh=" ++ toString (immh.toNat) ++ toString " immb=" ++ toString (immb.toNat) ++ toString " opcode=" ++ toString (opc.toNat) ++ toString ") — architecturally UNDEFINED" : String)
 
 /-- Optional `FPSR.QC` saturation flag for `evalSimdImmShiftNonZeroExt` (`some` only for saturating opcodes). -/
 def evalSimdImmShiftNonZeroExtSatFlags (q op : Bool) (immh : BitVec 4) (immb : BitVec 3)
@@ -1529,9 +1530,9 @@ def evalSimdThreeSameExt (q u : Bool) (size : BitVec 2) (opcode : BitVec 5)
   else
     match simdThreeSameFpMnemonic u size opcode with
     | some mnem =>
-      .error s!"unsupported AdvSIMD: simdThreeSame vector-FP {mnem} (q={if q then 1 else 0} u={if u then 1 else 0} size={size.toNat} opcode={opcode.toNat}) — vector FP not modeled in Arm64/Trusted/ISA"
+      .error (toString "unsupported AdvSIMD: simdThreeSame vector-FP " ++ toString (mnem) ++ toString " (q=" ++ toString (if q then 1 else 0) ++ toString " u=" ++ toString (if u then 1 else 0) ++ toString " size=" ++ toString (size.toNat) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString ") — vector FP not modeled in Arm64/Trusted/ISA" : String)
     | none =>
-      .error s!"unsupported AdvSIMD: simdThreeSame (q={if q then 1 else 0} u={if u then 1 else 0} size={size.toNat} opcode={opcode.toNat}) — architecturally UNDEFINED"
+      .error (toString "unsupported AdvSIMD: simdThreeSame (q=" ++ toString (if q then 1 else 0) ++ toString " u=" ++ toString (if u then 1 else 0) ++ toString " size=" ++ toString (size.toNat) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString ") — architecturally UNDEFINED" : String)
 
 /-- Optional `FPSR.QC` saturation flag for `evalSimdThreeSameExt` (`some` only for saturating opcodes). -/
 def evalSimdThreeSameExtSatFlags (q u : Bool) (size : BitVec 2) (opcode : BitVec 5)
@@ -1695,9 +1696,9 @@ def evalSimdTwoRegMiscExt (q u : Bool) (size : BitVec 2) (opcode : BitVec 5)
   else
     match simdTwoRegMiscFpMnemonic u size opcode with
     | some mnem =>
-      .error s!"unsupported AdvSIMD: simdTwoRegMisc vector-FP {mnem} (q={if q then 1 else 0} u={if u then 1 else 0} size={size.toNat} opcode={opcode.toNat}) — vector FP not modeled in Arm64/Trusted/ISA"
+      .error (toString "unsupported AdvSIMD: simdTwoRegMisc vector-FP " ++ toString (mnem) ++ toString " (q=" ++ toString (if q then 1 else 0) ++ toString " u=" ++ toString (if u then 1 else 0) ++ toString " size=" ++ toString (size.toNat) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString ") — vector FP not modeled in Arm64/Trusted/ISA" : String)
     | none =>
-      .error s!"unsupported AdvSIMD: simdTwoRegMisc (q={if q then 1 else 0} u={if u then 1 else 0} size={size.toNat} opcode={opcode.toNat}) — architecturally UNDEFINED"
+      .error (toString "unsupported AdvSIMD: simdTwoRegMisc (q=" ++ toString (if q then 1 else 0) ++ toString " u=" ++ toString (if u then 1 else 0) ++ toString " size=" ++ toString (size.toNat) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString ") — architecturally UNDEFINED" : String)
 
 /-- Optional `FPSR.QC` saturation flag for `evalSimdTwoRegMiscExt` (`some` only for saturating opcodes). -/
 def evalSimdTwoRegMiscExtSatFlags (q u : Bool) (size : BitVec 2) (opcode : BitVec 5)
@@ -2014,7 +2015,7 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
       (opcode == 0b010#3 && (size.extractLsb' 0 1) == 0#1) ||
       (opcode == 0b100#3 && (size == 0b00#2 || (size == 0b01#2 && !sBit)))
     if !validSt1 then
-      { s with status := .Exception s!"unsupported AdvSIMD: st1SinglePost (q={if q then 1 else 0} opcode={opcode.toNat} S={if sBit then 1 else 0} size={size.toNat}) — multi-register ST2-ST4 single-structure or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" }
+      { s with status := .Exception (toString "unsupported AdvSIMD: st1SinglePost (q=" ++ toString (if q then 1 else 0) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString " S=" ++ toString (if sBit then 1 else 0) ++ toString " size=" ++ toString (size.toNat) ++ toString ") — multi-register ST2-ST4 single-structure or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" : String) }
     else if !checkRegSPAligned s rn then
       s.setStatus (.Exception "SP alignment fault")
     else
@@ -2067,7 +2068,7 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
         let hi64 := (s.readVReg128 rn).extractLsb' 64 64
         (s.writeReg64 dstReg hi64).advancePC
       else
-        { s with status := .Exception s!"unsupported FP/SIMD: fmovGprVec (sf={if sf then 1 else 0} ftype={ftype.toNat} rmode={rmode.toNat} opcode={opcode.toNat}) — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" }
+        { s with status := .Exception (toString "unsupported FP/SIMD: fmovGprVec (sf=" ++ toString (if sf then 1 else 0) ++ toString " ftype=" ++ toString (ftype.toNat) ++ toString " rmode=" ++ toString (rmode.toNat) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString ") — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" : String) }
     else if opcode == 0b111#3 then
       let srcReg := Reg.fromZRBits rn
       if !sf && ftype == 0b00#2 && rmode == 0b00#2 then
@@ -2079,7 +2080,7 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
         let hi64 := s.readReg64 srcReg
         (s.writeVReg128 rd (hi64 ++ lo64)).advancePC
       else
-        { s with status := .Exception s!"unsupported FP/SIMD: fmovGprVec (sf={if sf then 1 else 0} ftype={ftype.toNat} rmode={rmode.toNat} opcode={opcode.toNat}) — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" }
+        { s with status := .Exception (toString "unsupported FP/SIMD: fmovGprVec (sf=" ++ toString (if sf then 1 else 0) ++ toString " ftype=" ++ toString (ftype.toNat) ++ toString " rmode=" ++ toString (rmode.toNat) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString ") — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" : String) }
     else if opcode == 0b000#3 || opcode == 0b001#3 then
       let unsigned := opcode == 0b001#3
       let dstReg := Reg.fromZRBits rd
@@ -2096,7 +2097,7 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
         let x := s.readVReg64 rn
         ((s.writeReg64 dstReg (evalFpToInt64_64 unsigned rmode x)).orFpsr (evalFpToIntFlags64_64 unsigned rmode x)).advancePC
       else
-        { s with status := .Exception s!"unsupported FP/SIMD: fmovGprVec (sf={if sf then 1 else 0} ftype={ftype.toNat} rmode={rmode.toNat} opcode={opcode.toNat}) — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" }
+        { s with status := .Exception (toString "unsupported FP/SIMD: fmovGprVec (sf=" ++ toString (if sf then 1 else 0) ++ toString " ftype=" ++ toString (ftype.toNat) ++ toString " rmode=" ++ toString (rmode.toNat) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString ") — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" : String) }
     else if rmode == 0b00#2 && (opcode == 0b100#3 || opcode == 0b101#3) then
       let unsigned := opcode == 0b101#3
       let dstReg := Reg.fromZRBits rd
@@ -2113,7 +2114,7 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
         let x := s.readVReg64 rn
         ((s.writeReg64 dstReg (evalFpToIntRound64_64 unsigned .RNA 0 x)).orFpsr (evalFpToIntRoundFlags64_64 unsigned .RNA 0 x)).advancePC
       else
-        { s with status := .Exception s!"unsupported FP/SIMD: fmovGprVec (sf={if sf then 1 else 0} ftype={ftype.toNat} rmode={rmode.toNat} opcode={opcode.toNat}) — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" }
+        { s with status := .Exception (toString "unsupported FP/SIMD: fmovGprVec (sf=" ++ toString (if sf then 1 else 0) ++ toString " ftype=" ++ toString (ftype.toNat) ++ toString " rmode=" ++ toString (rmode.toNat) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString ") — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" : String) }
     else if rmode == 0b00#2 && (opcode == 0b010#3 || opcode == 0b011#3) then
       let unsigned := opcode == 0b011#3
       let srcReg := Reg.fromZRBits rn
@@ -2130,9 +2131,9 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
         let x := s.readReg64 srcReg
         ((s.writeVReg64 rd (evalIntToFp64_64 unsigned x)).orFpsr (evalIntToFpFlags64_64 unsigned x)).advancePC
       else
-        { s with status := .Exception s!"unsupported FP/SIMD: fmovGprVec (sf={if sf then 1 else 0} ftype={ftype.toNat} rmode={rmode.toNat} opcode={opcode.toNat}) — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" }
+        { s with status := .Exception (toString "unsupported FP/SIMD: fmovGprVec (sf=" ++ toString (if sf then 1 else 0) ++ toString " ftype=" ++ toString (ftype.toNat) ++ toString " rmode=" ++ toString (rmode.toNat) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString ") — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" : String) }
     else
-      { s with status := .Exception s!"unsupported FP/SIMD: fmovGprVec (sf={if sf then 1 else 0} ftype={ftype.toNat} rmode={rmode.toNat} opcode={opcode.toNat}) — architecturally UNDEFINED or FJCVTZS not modeled in Arm64/Trusted/ISA" }
+      { s with status := .Exception (toString "unsupported FP/SIMD: fmovGprVec (sf=" ++ toString (if sf then 1 else 0) ++ toString " ftype=" ++ toString (ftype.toNat) ++ toString " rmode=" ++ toString (rmode.toNat) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString ") — architecturally UNDEFINED or FJCVTZS not modeled in Arm64/Trusted/ISA" : String) }
 
   | .simdImmShift q op immh immb opc rn rd =>
     if immh == 0#4 then
@@ -2202,7 +2203,7 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
 
   | .simdInsDup q op imm5 imm4 rn rd =>
     if (imm5.extractLsb' 0 4) == 0#4 then
-      { s with status := .Exception s!"unsupported AdvSIMD: simdInsDup (q={if q then 1 else 0} op={if op then 1 else 0} imm5={imm5.toNat} imm4={imm4.toNat}) — architecturally UNDEFINED" }
+      { s with status := .Exception (toString "unsupported AdvSIMD: simdInsDup (q=" ++ toString (if q then 1 else 0) ++ toString " op=" ++ toString (if op then 1 else 0) ++ toString " imm5=" ++ toString (imm5.toNat) ++ toString " imm4=" ++ toString (imm4.toNat) ++ toString ") — architecturally UNDEFINED" : String) }
     else
       let esize : Nat :=
         if (imm5.extractLsb' 0 1) == 1#1 then 8
@@ -2252,7 +2253,7 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
         let res := (old &&& clearMask) ||| (elem <<< (dstIdx * esize))
         (s.writeVReg128 rd res).advancePC
       else
-        { s with status := .Exception s!"unsupported AdvSIMD: simdInsDup (q={if q then 1 else 0} op={if op then 1 else 0} imm5={imm5.toNat} imm4={imm4.toNat}) — architecturally UNDEFINED" }
+        { s with status := .Exception (toString "unsupported AdvSIMD: simdInsDup (q=" ++ toString (if q then 1 else 0) ++ toString " op=" ++ toString (if op then 1 else 0) ++ toString " imm5=" ++ toString (imm5.toNat) ++ toString " imm4=" ++ toString (imm4.toNat) ++ toString ") — architecturally UNDEFINED" : String) }
 
   | .simdThreeSame q u size rm opcode rn rd =>
     let vn := s.readVReg128 rn
@@ -2424,9 +2425,9 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
         if opcode == 0b01100#5 then (if size.getLsbD 1 then "FMINNMV" else "FMAXNMV")
         else if opcode == 0b01111#5 then (if size.getLsbD 1 then "FMINV" else "FMAXV")
         else "vector-FP across-lanes"
-      { s with status := .Exception s!"unsupported AdvSIMD: simdAcrossLanes vector-FP {mnem} (q={if q then 1 else 0} u={if u then 1 else 0} size={size.toNat} opcode={opcode.toNat}) — vector FP not modeled in Arm64/Trusted/ISA" }
+      { s with status := .Exception (toString "unsupported AdvSIMD: simdAcrossLanes vector-FP " ++ toString (mnem) ++ toString " (q=" ++ toString (if q then 1 else 0) ++ toString " u=" ++ toString (if u then 1 else 0) ++ toString " size=" ++ toString (size.toNat) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString ") — vector FP not modeled in Arm64/Trusted/ISA" : String) }
     else if (size == 0b10#2 && !q) || size == 0b11#2 then
-      { s with status := .Exception s!"unsupported AdvSIMD: simdAcrossLanes (q={if q then 1 else 0} u={if u then 1 else 0} size={size.toNat} opcode={opcode.toNat}) — architecturally UNDEFINED" }
+      { s with status := .Exception (toString "unsupported AdvSIMD: simdAcrossLanes (q=" ++ toString (if q then 1 else 0) ++ toString " u=" ++ toString (if u then 1 else 0) ++ toString " size=" ++ toString (size.toNat) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString ") — architecturally UNDEFINED" : String) }
     else if opcode == 0b00011#5 || (!u && opcode == 0b11011#5) then
       -- UADDLV / SADDLV (`00011`, result width `2*esize`) and ADDV (`u = 0`, `11011`, width `esize`).
       let long := opcode == 0b00011#5
@@ -2456,7 +2457,7 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
         return cur
       (s.writeVReg128 rd best).advancePC
     else
-      { s with status := .Exception s!"unsupported AdvSIMD: simdAcrossLanes (q={if q then 1 else 0} u={if u then 1 else 0} size={size.toNat} opcode={opcode.toNat}) — architecturally UNDEFINED" }
+      { s with status := .Exception (toString "unsupported AdvSIMD: simdAcrossLanes (q=" ++ toString (if q then 1 else 0) ++ toString " u=" ++ toString (if u then 1 else 0) ++ toString " size=" ++ toString (size.toNat) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString ") — architecturally UNDEFINED" : String) }
 
   | .simdPermute q size rm opcode rn rd =>
     if (opcode == 0b001#3 || opcode == 0b101#3 || opcode == 0b011#3 || opcode == 0b111#3) && !(size == 0b11#2 && !q) then
@@ -2513,11 +2514,11 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
         return acc
       (s.writeVReg128 rd res).advancePC
     else
-      { s with status := .Exception s!"unsupported AdvSIMD: simdPermute (q={if q then 1 else 0} size={size.toNat} opcode={opcode.toNat}) — architecturally UNDEFINED" }
+      { s with status := .Exception (toString "unsupported AdvSIMD: simdPermute (q=" ++ toString (if q then 1 else 0) ++ toString " size=" ++ toString (size.toNat) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString ") — architecturally UNDEFINED" : String) }
 
   | .simdExt q rm imm4 rn rd =>
     if !q && imm4.getLsbD 3 then
-      { s with status := .Exception s!"unsupported AdvSIMD: simdExt (q=0 imm4={imm4.toNat}) — architecturally UNDEFINED" }
+      { s with status := .Exception (toString "unsupported AdvSIMD: simdExt (q=0 imm4=" ++ toString (imm4.toNat) ++ toString ") — architecturally UNDEFINED" : String) }
     else
       let vn := s.readVReg128 rn
       let vm := s.readVReg128 rm
@@ -2538,7 +2539,7 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
       else if ftype == 0b01#2 then
         (s.writeVReg64 rd (s.readVReg64 rn)).advancePC
       else
-        { s with status := .Exception s!"unsupported FP/SIMD: fpDataProc1 (ftype={ftype.toNat} opcode={opcode.toNat}) — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" }
+        { s with status := .Exception (toString "unsupported FP/SIMD: fpDataProc1 (ftype=" ++ toString (ftype.toNat) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString ") — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" : String) }
     else if ftype == 0b00#2 && opcode == 0b000101#6 then
       let x := s.readVReg32 rn
       ((s.writeVReg64 rd (evalFpCvt32To64 x)).orFpsr (evalFpCvt32To64Flags x)).advancePC
@@ -2551,7 +2552,7 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
       else if ftype == 0b01#2 then
         (s.writeVReg64 rd (evalFp1Op64 opcode (s.readVReg64 rn))).advancePC
       else
-        { s with status := .Exception s!"unsupported FP/SIMD: fpDataProc1 (ftype={ftype.toNat} opcode={opcode.toNat}) — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" }
+        { s with status := .Exception (toString "unsupported FP/SIMD: fpDataProc1 (ftype=" ++ toString (ftype.toNat) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString ") — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" : String) }
     else if opcode == 0b000011#6 ||
         (opcode >= 0b001000#6 && opcode <= 0b001111#6 && opcode != 0b001101#6) then
       if ftype == 0b00#2 then
@@ -2561,9 +2562,9 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
         let x := s.readVReg64 rn
         ((s.writeVReg64 rd (evalFp1Op64 opcode x)).orFpsr (evalFp1OpFlags64 opcode x)).advancePC
       else
-        { s with status := .Exception s!"unsupported FP/SIMD: fpDataProc1 (ftype={ftype.toNat} opcode={opcode.toNat}) — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" }
+        { s with status := .Exception (toString "unsupported FP/SIMD: fpDataProc1 (ftype=" ++ toString (ftype.toNat) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString ") — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" : String) }
     else
-      { s with status := .Exception s!"unsupported FP/SIMD: fpDataProc1 (ftype={ftype.toNat} opcode={opcode.toNat}) — FP16/BF16/FRINT32/64 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" }
+      { s with status := .Exception (toString "unsupported FP/SIMD: fpDataProc1 (ftype=" ++ toString (ftype.toNat) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString ") — FP16/BF16/FRINT32/64 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" : String) }
 
   | .fpDataProc2 ftype rm opcode rn rd =>
     if opcode <= 0b1000#4 then
@@ -2576,9 +2577,9 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
         let vm := s.readVReg64 rm
         ((s.writeVReg64 rd (evalFp2Op64 opcode vn vm)).orFpsr (evalFp2OpFlags64 opcode vn vm)).advancePC
       else
-        { s with status := .Exception s!"unsupported FP/SIMD: fpDataProc2 (ftype={ftype.toNat} opcode={opcode.toNat}) — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" }
+        { s with status := .Exception (toString "unsupported FP/SIMD: fpDataProc2 (ftype=" ++ toString (ftype.toNat) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString ") — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" : String) }
     else
-      { s with status := .Exception s!"unsupported FP/SIMD: fpDataProc2 (ftype={ftype.toNat} opcode={opcode.toNat}) — architecturally UNDEFINED" }
+      { s with status := .Exception (toString "unsupported FP/SIMD: fpDataProc2 (ftype=" ++ toString (ftype.toNat) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString ") — architecturally UNDEFINED" : String) }
 
   | .fpCompare ftype rm op rn opcode2 =>
     if op == 0b00#2 && (opcode2 == 0b00000#5 || opcode2 == 0b01000#5 || opcode2 == 0b10000#5 || opcode2 == 0b11000#5) then
@@ -2593,9 +2594,9 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
         let rhs := if withZero then 0#64 else s.readVReg64 rm
         ((s.setPState (evalFpCmp64 signalNaN lhs rhs)).orFpsr (evalFpCmpFlags64 signalNaN lhs rhs)).advancePC
       else
-        { s with status := .Exception s!"unsupported FP/SIMD: fpCompare (ftype={ftype.toNat} op={op.toNat} opcode2={opcode2.toNat}) — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" }
+        { s with status := .Exception (toString "unsupported FP/SIMD: fpCompare (ftype=" ++ toString (ftype.toNat) ++ toString " op=" ++ toString (op.toNat) ++ toString " opcode2=" ++ toString (opcode2.toNat) ++ toString ") — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" : String) }
     else
-      { s with status := .Exception s!"unsupported FP/SIMD: fpCompare (ftype={ftype.toNat} op={op.toNat} opcode2={opcode2.toNat}) — architecturally UNDEFINED" }
+      { s with status := .Exception (toString "unsupported FP/SIMD: fpCompare (ftype=" ++ toString (ftype.toNat) ++ toString " op=" ++ toString (op.toNat) ++ toString " opcode2=" ++ toString (opcode2.toNat) ++ toString ") — architecturally UNDEFINED" : String) }
 
   | .fpImm ftype imm8 rd =>
     if ftype == 0b00#2 then
@@ -2603,7 +2604,7 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
     else if ftype == 0b01#2 then
       (s.writeVReg64 rd (vfpExpandImm64 imm8)).advancePC
     else
-      { s with status := .Exception s!"unsupported FP/SIMD: fpImm (ftype={ftype.toNat} imm8={imm8.toNat}) — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" }
+      { s with status := .Exception (toString "unsupported FP/SIMD: fpImm (ftype=" ++ toString (ftype.toNat) ++ toString " imm8=" ++ toString (imm8.toNat) ++ toString ") — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" : String) }
 
   | .fpCondCompare ftype rm cond rn op nzcv =>
     if ftype == 0b00#2 then
@@ -2621,7 +2622,7 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
       let flags := if holds then evalFpCmpFlags64 op lhs rhs else 0#32
       ((s.setPState ps).orFpsr flags).advancePC
     else
-      { s with status := .Exception s!"unsupported FP/SIMD: fpCondCompare (ftype={ftype.toNat}) — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" }
+      { s with status := .Exception (toString "unsupported FP/SIMD: fpCondCompare (ftype=" ++ toString (ftype.toNat) ++ toString ") — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" : String) }
 
   | .fpCondSelect ftype rm cond rn rd =>
     let holds := ConditionHolds (CondCode.ofBits cond) s.pstate
@@ -2630,7 +2631,7 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
     else if ftype == 0b01#2 then
       (s.writeVReg64 rd (if holds then s.readVReg64 rn else s.readVReg64 rm)).advancePC
     else
-      { s with status := .Exception s!"unsupported FP/SIMD: fpCondSelect (ftype={ftype.toNat}) — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" }
+      { s with status := .Exception (toString "unsupported FP/SIMD: fpCondSelect (ftype=" ++ toString (ftype.toNat) ++ toString ") — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" : String) }
 
   | .fpDataProc3 ftype o1 rm o0 ra rn rd =>
     if ftype == 0b00#2 then
@@ -2644,11 +2645,11 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
       let va := s.readVReg64 ra
       ((s.writeVReg64 rd (evalFp3Op64 o1 o0 vn vm va)).orFpsr (evalFp3OpFlags64 o1 o0 vn vm va)).advancePC
     else
-      { s with status := .Exception s!"unsupported FP/SIMD: fpDataProc3 (ftype={ftype.toNat} o1={if o1 then 1 else 0} o0={if o0 then 1 else 0}) — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" }
+      { s with status := .Exception (toString "unsupported FP/SIMD: fpDataProc3 (ftype=" ++ toString (ftype.toNat) ++ toString " o1=" ++ toString (if o1 then 1 else 0) ++ toString " o0=" ++ toString (if o0 then 1 else 0) ++ toString ") — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" : String) }
 
   | .fpFixedConv sf ftype rmode opcode scale rn rd =>
     if !sf && scale.toNat < 32 then
-      { s with status := .Exception s!"unsupported FP/SIMD: fpFixedConv (sf=0 scale={scale.toNat}) — architecturally UNDEFINED" }
+      { s with status := .Exception (toString "unsupported FP/SIMD: fpFixedConv (sf=0 scale=" ++ toString (scale.toNat) ++ toString ") — architecturally UNDEFINED" : String) }
     else
       let fbits := 64 - scale.toNat
       if rmode == 0b11#2 && (opcode == 0b000#3 || opcode == 0b001#3) then
@@ -2667,7 +2668,7 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
           let x := s.readVReg64 rn
           ((s.writeReg64 dstReg (evalFpToIntRound64_64 unsigned .RTZ fbits x)).orFpsr (evalFpToIntRoundFlags64_64 unsigned .RTZ fbits x)).advancePC
         else
-          { s with status := .Exception s!"unsupported FP/SIMD: fpFixedConv (sf={if sf then 1 else 0} ftype={ftype.toNat} rmode={rmode.toNat} opcode={opcode.toNat} scale={scale.toNat}) — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" }
+          { s with status := .Exception (toString "unsupported FP/SIMD: fpFixedConv (sf=" ++ toString (if sf then 1 else 0) ++ toString " ftype=" ++ toString (ftype.toNat) ++ toString " rmode=" ++ toString (rmode.toNat) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString " scale=" ++ toString (scale.toNat) ++ toString ") — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" : String) }
       else if rmode == 0b00#2 && (opcode == 0b010#3 || opcode == 0b011#3) then
         let unsigned := opcode == 0b011#3
         let srcReg := Reg.fromZRBits rn
@@ -2684,9 +2685,9 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
           let x := s.readReg64 srcReg
           ((s.writeVReg64 rd (evalFixedToFp64_64 unsigned fbits x)).orFpsr (evalFixedToFpFlags64_64 unsigned fbits x)).advancePC
         else
-          { s with status := .Exception s!"unsupported FP/SIMD: fpFixedConv (sf={if sf then 1 else 0} ftype={ftype.toNat} rmode={rmode.toNat} opcode={opcode.toNat} scale={scale.toNat}) — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" }
+          { s with status := .Exception (toString "unsupported FP/SIMD: fpFixedConv (sf=" ++ toString (if sf then 1 else 0) ++ toString " ftype=" ++ toString (ftype.toNat) ++ toString " rmode=" ++ toString (rmode.toNat) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString " scale=" ++ toString (scale.toNat) ++ toString ") — FP16 or architecturally UNDEFINED not modeled in Arm64/Trusted/ISA" : String) }
       else
-        { s with status := .Exception s!"unsupported FP/SIMD: fpFixedConv (sf={if sf then 1 else 0} ftype={ftype.toNat} rmode={rmode.toNat} opcode={opcode.toNat} scale={scale.toNat}) — architecturally UNDEFINED" }
+        { s with status := .Exception (toString "unsupported FP/SIMD: fpFixedConv (sf=" ++ toString (if sf then 1 else 0) ++ toString " ftype=" ++ toString (ftype.toNat) ++ toString " rmode=" ++ toString (rmode.toNat) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString " scale=" ++ toString (scale.toNat) ++ toString ") — architecturally UNDEFINED" : String) }
 
   -- ===== Sequential atomics (single-threaded model; see `Arm64/Trusted/ISA/README.md`) =====
 
@@ -2910,14 +2911,14 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
   -- Scalar duplicate element `DUP <V><d>, <Vn>.<T>[<index>]`.
   | .simdDupScalar imm5 rn rd =>
     if imm5.extractLsb' 0 4 == 0#4 then
-      { s with status := .Exception s!"unsupported AdvSIMD: simdDupScalar (imm5={imm5.toNat}) — architecturally UNDEFINED" }
+      { s with status := .Exception (toString "unsupported AdvSIMD: simdDupScalar (imm5=" ++ toString (imm5.toNat) ++ toString ") — architecturally UNDEFINED" : String) }
     else
       (s.writeVReg128 rd (evalSimdDupScalar imm5 (s.readVReg128 rn))).advancePC
 
   -- `LD1` / `ST1` (single-structure lane transfer, no-offset or post-indexed).
   | .simdLdSt1Single isLoad q postIdx rm opcode sBit size rn vt =>
     if !validSimdLdSt1Single opcode sBit size then
-      { s with status := .Exception s!"unsupported AdvSIMD: simdLdSt1Single (isLoad={if isLoad then 1 else 0} q={if q then 1 else 0} opcode={opcode.toNat} S={if sBit then 1 else 0} size={size.toNat}) — architecturally UNDEFINED" }
+      { s with status := .Exception (toString "unsupported AdvSIMD: simdLdSt1Single (isLoad=" ++ toString (if isLoad then 1 else 0) ++ toString " q=" ++ toString (if q then 1 else 0) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString " S=" ++ toString (if sBit then 1 else 0) ++ toString " size=" ++ toString (size.toNat) ++ toString ") — architecturally UNDEFINED" : String) }
     else if !checkRegSPAligned s rn then
       s.setStatus (.Exception "SP alignment fault")
     else
@@ -2972,7 +2973,7 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
   -- `LD2`–`LD4` / `ST2`–`ST4` (multiple structures, `selem ∈ {2, 3, 4}` interleaved registers).
   | .simdLdStMulti isLoad q size selem rn postIdx rm vt =>
     if (size == 3#2 && !q) || !(selem == 2 || selem == 3 || selem == 4) then
-      { s with status := .Exception s!"unsupported AdvSIMD: simdLdStMulti (isLoad={if isLoad then 1 else 0} q={if q then 1 else 0} size={size.toNat} selem={selem}) — architecturally UNDEFINED" }
+      { s with status := .Exception (toString "unsupported AdvSIMD: simdLdStMulti (isLoad=" ++ toString (if isLoad then 1 else 0) ++ toString " q=" ++ toString (if q then 1 else 0) ++ toString " size=" ++ toString (size.toNat) ++ toString " selem=" ++ toString (selem) ++ toString ") — architecturally UNDEFINED" : String) }
     else if !checkRegSPAligned s rn then
       s.setStatus (.Exception "SP alignment fault")
     else
@@ -3047,7 +3048,7 @@ def execInstWithSvc (svc : State → State) (inst : Instr) (s : State) : State :
   -- `SMLSL`/`UMLSL`, `SMULL`/`UMULL`, and `*2` variants).
   | .simdThreeDiff q u size rm opcode rn rd =>
     if !validSimdThreeDiff size opcode then
-      { s with status := .Exception s!"unsupported AdvSIMD: simdThreeDiff (q={if q then 1 else 0} u={if u then 1 else 0} size={size.toNat} opcode={opcode.toNat}) — architecturally UNDEFINED or SQDM*" }
+      { s with status := .Exception (toString "unsupported AdvSIMD: simdThreeDiff (q=" ++ toString (if q then 1 else 0) ++ toString " u=" ++ toString (if u then 1 else 0) ++ toString " size=" ++ toString (size.toNat) ++ toString " opcode=" ++ toString (opcode.toNat) ++ toString ") — architecturally UNDEFINED or SQDM*" : String) }
     else
       (s.writeVReg128 rd (evalSimdThreeDiff q u size opcode (s.readVReg128 rd) (s.readVReg128 rn) (s.readVReg128 rm))).advancePC
 
