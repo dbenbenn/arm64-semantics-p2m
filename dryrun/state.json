@@ -1,13 +1,21 @@
 {
+ "Arm64": {
+  "error": "",
+  "id": "8bc7625d-3fa7-45b8-a861-626237eab7ad",
+  "job_id": "f9070d36-4cbb-4e47-bd30-d626c5d3f122",
+  "status": "PUBLISHED"
+ },
  "Arm64_ISA_Decode": {
   "error": "",
+  "id": "a5645e61-08f9-4bf1-8623-12fb0e0081ba",
   "job_id": "230c4afe-e8dc-4234-a746-047b5a2f1ed7",
-  "status": "PENDING"
+  "status": "PUBLISHED"
  },
  "Arm64_ISA_Eval": {
   "error": "",
+  "id": "fd031640-6fac-475f-b08f-af2e2d540db7",
   "job_id": "5751bb6d-9371-4226-9105-718e591baaa6",
-  "status": "PENDING"
+  "status": "PUBLISHED"
  },
  "Arm64_ISA_Float": {
   "error": "",
@@ -19,6 +27,12 @@
   "error": "",
   "id": "da6dc941-11bb-46b5-beaa-2e424cf3158b",
   "job_id": "6c7cdeb7-1a99-4518-b2c7-c46b3f3fb7dd",
+  "status": "PUBLISHED"
+ },
+ "Arm64_ISA_Semantics": {
+  "error": "",
+  "id": "f9b7c644-2dfe-42ed-8f35-b19b9800bcd9",
+  "job_id": "348e4cb6-6e1d-453e-9fc7-09ca0605fe7a",
   "status": "PUBLISHED"
  },
  "Arm64_ISA_State": {
@@ -33,10 +47,70 @@
   "job_id": "8dd5682a-5dcb-4ecc-9b29-41351e281484",
   "status": "PUBLISHED"
  },
+ "Arm64_Object_Labels": {
+  "error": "",
+  "id": "e8b394d9-991c-467f-ab4e-eb297176e666",
+  "job_id": "db4560b8-f08f-40fd-bacf-c7a5b93440ff",
+  "status": "PUBLISHED"
+ },
+ "Arm64_Object_Placed": {
+  "error": "",
+  "id": "5af2d439-c67b-40f9-9326-abfbf88e333d",
+  "job_id": "05ab3707-eb6e-47c8-ac5d-441dfddd7e83",
+  "status": "PUBLISHED"
+ },
  "Arm64_Object_Reloc": {
   "error": "",
   "id": "24debe39-587f-4488-9fb7-d6fc003e7059",
   "job_id": "8b6ea0f7-f2a9-41d4-ad20-578a81cf8f0f",
+  "status": "PUBLISHED"
+ },
+ "Arm64_Process": {
+  "error": "",
+  "id": "1f8358a0-25c6-418d-9c6a-d650b33f5f95",
+  "job_id": "bc4b833a-02f1-49b6-b2e8-62e144c632fc",
+  "status": "PUBLISHED"
+ },
+ "Arm64_Process_Assumptions": {
+  "error": "",
+  "id": "6732d1d6-9b42-432d-a671-640d2f50e039",
+  "job_id": "16e8375f-502d-40e8-9295-b463f4e43c9b",
+  "status": "PUBLISHED"
+ },
+ "Arm64_Process_Loader": {
+  "error": "",
+  "id": "fc2d8639-6ab5-4277-a389-4211e12745da",
+  "job_id": "b7c10520-af4d-47b0-b625-b97428b823b3",
+  "status": "PUBLISHED"
+ },
+ "Arm64_Process_OverrideWellBehaved": {
+  "error": "",
+  "id": "50160ed5-ee4d-4d4f-8a1c-05836bde6b0f",
+  "job_id": "4e6baaf6-e063-4ecd-8980-d328fe1a083e",
+  "status": "PUBLISHED"
+ },
+ "Arm64_Process_Overrides": {
+  "error": "",
+  "id": "b5c22a17-2ec5-4c54-90c3-f1aa9153bfa1",
+  "job_id": "4d28c23f-2894-4499-b6cc-00b2cac4bf52",
+  "status": "PUBLISHED"
+ },
+ "Arm64_Process_Placed": {
+  "error": "",
+  "id": "7fb11417-f91e-4c47-8c7c-ba089c15dfe2",
+  "job_id": "4dfd9515-e831-4658-b9a0-cccb4529ef10",
+  "status": "PUBLISHED"
+ },
+ "Arm64_Process_Semantics": {
+  "error": "",
+  "id": "e50020d8-c0ff-4bed-9204-8ac2a16a1c12",
+  "job_id": "525492be-6e01-4236-bc42-066d698c4acf",
+  "status": "PUBLISHED"
+ },
+ "Arm64_Process_Types": {
+  "error": "",
+  "id": "c78e89b2-d57f-4aae-81e4-351f1ab527df",
+  "job_id": "b6752078-d3b6-40c4-8596-47dbb5db5521",
   "status": "PUBLISHED"
  },
  "Arm64_Spec_AsciiNum": {
@@ -45,10 +119,65 @@
   "job_id": "841ac09c-1499-4c09-a172-d3514cb767e8",
   "status": "PUBLISHED"
  },
+ "Arm64_Spec_GlobalAlloc": {
+  "error": "",
+  "id": "0c7bcf56-3c59-4b1b-bdc2-e0dcadcb3f4f",
+  "job_id": "0bd9996e-ddaa-46e5-818a-2609ebb25a61",
+  "status": "PUBLISHED"
+ },
+ "Arm64_Spec_Hoare": {
+  "error": "",
+  "id": "2d27bf92-2ce8-4e60-bcfd-23ebee3806a5",
+  "job_id": "214d238b-aacc-4d97-a364-9cfb96126b8a",
+  "status": "PUBLISHED"
+ },
+ "Arm64_Spec_Placed": {
+  "error": "",
+  "id": "d4105beb-a037-4259-a8bc-d545bce63b2c",
+  "job_id": "15ae619a-5556-4897-a131-c98a61b7c6cd",
+  "status": "PUBLISHED"
+ },
+ "Arm64_Spec_RustAbi": {
+  "error": "",
+  "id": "5fd84f85-2711-4d6f-980a-08e903a36fa9",
+  "job_id": "6ac485f8-86f3-465b-be1b-ffa550678486",
+  "status": "PUBLISHED"
+ },
+ "Arm64_Spec_RustHeap": {
+  "error": "",
+  "id": "89b96c84-4c30-460b-aa21-9b964711c7bc",
+  "job_id": "a1af7f4a-cad1-4650-b7ee-815eafbdb956",
+  "status": "PUBLISHED"
+ },
+ "Arm64_Spec_RustRuntime": {
+  "error": "",
+  "id": "ce77041e-470a-4701-9718-15736e4e6968",
+  "job_id": "a1741569-702a-49b4-93e2-600488f729f3",
+  "status": "PUBLISHED"
+ },
+ "Arm64_Spec_SepLogic": {
+  "error": "",
+  "id": "e029b223-b3ad-430b-a7d5-949560e9b62e",
+  "job_id": "717f91de-ff71-48fe-9cfe-3d7dd0c6f910",
+  "status": "PUBLISHED"
+ },
+ "Arm64_Spec_SepLogicModel": {
+  "error": "",
+  "id": "d540b78d-bccb-4e35-a085-6ee0adc3247a",
+  "job_id": "23f91bbf-c577-48ab-b17d-eae58cca75d1",
+  "status": "PUBLISHED"
+ },
+ "Arm64_Syscalls": {
+  "error": "",
+  "id": "b087a47a-d346-4297-90bf-83b433d0a718",
+  "job_id": "62894b62-05fd-4c7b-93af-ab1cb552d7b8",
+  "status": "PUBLISHED"
+ },
  "Arm64_Syscalls_Alloc": {
   "error": "",
+  "id": "37172d67-349a-4473-b438-9306ac294094",
   "job_id": "5b44fe71-a7ff-4865-8178-ba8d9bc013bb",
-  "status": "PENDING"
+  "status": "PUBLISHED"
  },
  "Arm64_Syscalls_Common": {
   "error": "",
@@ -60,6 +189,12 @@
   "error": "",
   "id": "e7586603-e543-482e-93b0-53816dab442c",
   "job_id": "db0e8445-7687-4ed6-8d30-384a24b46aa6",
+  "status": "PUBLISHED"
+ },
+ "Arm64_Syscalls_FileIo": {
+  "error": "",
+  "id": "2a0613cc-7c6a-4031-95d7-d112c3aef5f2",
+  "job_id": "065a6dba-4824-43ea-b729-480c71a54ee7",
   "status": "PUBLISHED"
  },
  "Arm64_Syscalls_Fs_Fcntl": {
@@ -190,8 +325,9 @@
  },
  "Arm64_Syscalls_Stdio": {
   "error": "",
+  "id": "ad4e2723-0e14-4d89-ad34-6749007a5d39",
   "job_id": "d3066dc5-f751-4399-ab98-ca98f93206ca",
-  "status": "PENDING"
+  "status": "PUBLISHED"
  },
  "Arm64_Syscalls_Time": {
   "error": "",

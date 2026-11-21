@@ -41,7 +41,7 @@ while True:
     pending = [n for n in mods if state.get(n, {}).get('status') != 'PUBLISHED']
     if not pending: mon('done'); print('all published'); break
     failed = [n for n in pending if state.get(n, {}).get('status') in ('FAILED', 'ERROR')]
-    inflight = [n for n in pending if state.get(n, {}).get('status') in ('PENDING', 'RUNNING', 'PROCESSING')]
+    inflight = [n for n in pending if state.get(n, {}).get('status') not in (None, 'PUBLISHED', 'FAILED', 'ERROR')]
     for n in inflight:
         r = p2m.call('GET', f"/publish-jobs/{state[n]['job_id']}")
         state[n]['status'] = r.get('status'); state[n]['error'] = r.get('error_message', '')
@@ -56,7 +56,7 @@ while True:
     save()
     failed = [n for n in mods if state.get(n, {}).get('status') in ('FAILED', 'ERROR')]
     blocked = [n for n in mods if n not in state and any(d in failed or (d in state and state[d].get('status') in ('FAILED','ERROR')) for d in deps[n])]
-    stuck = not [n for n in mods if state.get(n, {}).get('status') in ('PENDING', 'RUNNING', 'PROCESSING')] and not ready
+    stuck = not [n for n in mods if state.get(n, {}).get('status') not in (None, 'PUBLISHED', 'FAILED', 'ERROR')] and not ready
     if failed and stuck:
         mon('failed', f'{len(failed)} bundles failed: ' + ', '.join(failed)); print('FAILED', failed); break
     mon(); time.sleep(30)
