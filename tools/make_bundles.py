@@ -130,4 +130,5 @@ def main():
         n += 1
     print(f"{n} bundles written to {dst}")
 
-main()
+if __name__ == "__main__":
+    main()
