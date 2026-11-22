@@ -1,0 +1,458 @@
+{
+ "P2mProbeArm64": {
+  "id": "8bc7625d-3fa7-45b8-a861-626237eab7ad",
+  "replacement": "Def_Arm64",
+  "replacement_id": "81796d1e-b51c-4632-b7fb-96468208db58",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:07.917+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_ISA_Decode": {
+  "id": "a5645e61-08f9-4bf1-8623-12fb0e0081ba",
+  "replacement": "Def_Arm64_ISA_Decode",
+  "replacement_id": "6212900f-99df-40df-aff2-e49041305006",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:08.506+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_ISA_Eval": {
+  "id": "fd031640-6fac-475f-b08f-af2e2d540db7",
+  "replacement": "Def_Arm64_ISA_Eval",
+  "replacement_id": "a1c9f585-8e0e-45ab-9a5e-b1eb98248635",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:09.131+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_ISA_Float": {
+  "id": "84d7d3f5-3729-4df9-b028-57dc3e8171c2",
+  "replacement": "Def_Arm64_ISA_Float",
+  "replacement_id": "7b1fb954-828b-4678-9871-f4707ea197ea",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:09.799+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_ISA_Memory": {
+  "id": "da6dc941-11bb-46b5-beaa-2e424cf3158b",
+  "replacement": "Def_Arm64_ISA_Memory",
+  "replacement_id": "54b089ac-3528-42ad-9211-52afcd3b5f8c",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:10.596+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_ISA_Semantics": {
+  "id": "f9b7c644-2dfe-42ed-8f35-b19b9800bcd9",
+  "replacement": "Def_Arm64_ISA_Semantics",
+  "replacement_id": "2ba86e9b-a42e-47e6-a082-4da24d674446",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:11.154+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_ISA_State": {
+  "id": "f353ced1-e507-47ef-b014-cb3cf32a56ff",
+  "replacement": "Def_Arm64_ISA_State",
+  "replacement_id": "c7addf90-7ce2-4da5-bf65-75ea17f8a041",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:11.841+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_ISA_Syntax": {
+  "id": "ed9888ed-3138-474f-875c-e625543610f2",
+  "replacement": "Def_Arm64_ISA_Syntax",
+  "replacement_id": "b4a899aa-d4a8-44e1-9268-df2697404a53",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:12.522+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Object_Labels": {
+  "id": "e8b394d9-991c-467f-ab4e-eb297176e666",
+  "replacement": "Def_Arm64_Object_Labels",
+  "replacement_id": "51a50286-2300-40a9-aaed-edf2205f3de6",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:13.167+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Object_Placed": {
+  "id": "5af2d439-c67b-40f9-9326-abfbf88e333d",
+  "replacement": "Def_Arm64_Object_Placed",
+  "replacement_id": "54c44d66-86c5-40fe-a966-f95a39a97ae5",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:13.755+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Object_Reloc": {
+  "id": "24debe39-587f-4488-9fb7-d6fc003e7059",
+  "replacement": "Def_Arm64_Object_Reloc",
+  "replacement_id": "724e28f6-7943-4475-af3f-e18ed866094f",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:14.531+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Process": {
+  "id": "1f8358a0-25c6-418d-9c6a-d650b33f5f95",
+  "replacement": "Def_Arm64_Process",
+  "replacement_id": "17342a41-512e-41e0-91bc-0ce0db595aba",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:15.101+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Process_Assumptions": {
+  "id": "6732d1d6-9b42-432d-a671-640d2f50e039",
+  "replacement": "Def_Arm64_Process_Assumptions",
+  "replacement_id": "86edfb4d-ce6d-44b8-b321-07316eae5729",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:15.761+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Process_Loader": {
+  "id": "fc2d8639-6ab5-4277-a389-4211e12745da",
+  "replacement": "Def_Arm64_Process_Loader",
+  "replacement_id": "de83be43-5a3a-4f5e-b8d1-82f0cc185e0c",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:16.334+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Process_OverrideWellBehaved": {
+  "id": "50160ed5-ee4d-4d4f-8a1c-05836bde6b0f",
+  "replacement": "Def_Arm64_Process_OverrideWellBehaved",
+  "replacement_id": "04c1c255-e320-4c78-811f-5e735610d10e",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:17.007+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Process_Overrides": {
+  "id": "b5c22a17-2ec5-4c54-90c3-f1aa9153bfa1",
+  "replacement": "Def_Arm64_Process_Overrides",
+  "replacement_id": "ab139a57-1932-4938-b40b-9a54a93eae8c",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:17.58+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Process_Placed": {
+  "id": "7fb11417-f91e-4c47-8c7c-ba089c15dfe2",
+  "replacement": "Def_Arm64_Process_Placed",
+  "replacement_id": "f161da93-fcac-4f1b-9b3d-81cad37893c0",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:18.104+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Process_Semantics": {
+  "id": "e50020d8-c0ff-4bed-9204-8ac2a16a1c12",
+  "replacement": "Def_Arm64_Process_Semantics",
+  "replacement_id": "6ef13e60-723a-4eb9-8ab5-a40930272a59",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:18.712+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Process_Types": {
+  "id": "c78e89b2-d57f-4aae-81e4-351f1ab527df",
+  "replacement": "Def_Arm64_Process_Types",
+  "replacement_id": "a5760e11-22ea-44ea-bd89-5b679b1fce30",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:19.326+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Spec_AsciiNum": {
+  "id": "4689ca2f-1a5b-4af8-a36d-360f97347c59",
+  "replacement": "Def_Arm64_Spec_AsciiNum",
+  "replacement_id": "70c9b8e2-42d1-4fde-8c40-90edcab5b7dd",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:19.896+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Spec_GlobalAlloc": {
+  "id": "0c7bcf56-3c59-4b1b-bdc2-e0dcadcb3f4f",
+  "replacement": "Def_Arm64_Spec_GlobalAlloc",
+  "replacement_id": "afccd089-8b68-450b-b63d-bbf1e3a4a940",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:20.527+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Spec_Hoare": {
+  "id": "2d27bf92-2ce8-4e60-bcfd-23ebee3806a5",
+  "replacement": "Def_Arm64_Spec_Hoare",
+  "replacement_id": "1c274150-b906-4ec2-bdb4-39dfc594ecfa",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:21.104+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Spec_Placed": {
+  "id": "d4105beb-a037-4259-a8bc-d545bce63b2c",
+  "replacement": "Def_Arm64_Spec_Placed",
+  "replacement_id": "d4a2a60e-04d6-416d-b3c0-4f6cb26f8079",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:21.684+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Spec_RustAbi": {
+  "id": "5fd84f85-2711-4d6f-980a-08e903a36fa9",
+  "replacement": "Def_Arm64_Spec_RustAbi",
+  "replacement_id": "e8de9fe6-3946-46e6-9306-57f774159c80",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:22.277+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Spec_RustHeap": {
+  "id": "89b96c84-4c30-460b-aa21-9b964711c7bc",
+  "replacement": "Def_Arm64_Spec_RustHeap",
+  "replacement_id": "d5c7ae0b-3419-4a1c-a14c-2f860619cb5d",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:22.889+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Spec_RustRuntime": {
+  "id": "ce77041e-470a-4701-9718-15736e4e6968",
+  "replacement": "Def_Arm64_Spec_RustRuntime",
+  "replacement_id": "39dc566b-22b2-4f27-b97f-ff0322f97f28",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:23.637+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Spec_SepLogic": {
+  "id": "e029b223-b3ad-430b-a7d5-949560e9b62e",
+  "replacement": "Def_Arm64_Spec_SepLogic",
+  "replacement_id": "a7e4555c-6591-4493-a114-0166903d477a",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:24.297+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Spec_SepLogicModel": {
+  "id": "d540b78d-bccb-4e35-a085-6ee0adc3247a",
+  "replacement": "Def_Arm64_Spec_SepLogicModel",
+  "replacement_id": "7422cba2-f0c2-44cb-8a70-3eae361dd28b",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:25.117+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls": {
+  "id": "b087a47a-d346-4297-90bf-83b433d0a718",
+  "replacement": "Def_Arm64_Syscalls",
+  "replacement_id": "a91606b6-0c18-42c2-9cb6-dfafb8583c69",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:25.722+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Alloc": {
+  "id": "37172d67-349a-4473-b438-9306ac294094",
+  "replacement": "Def_Arm64_Syscalls_Alloc",
+  "replacement_id": "0ef7cd55-594b-4cb2-8ca9-a1b920f29f61",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:26.437+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Common": {
+  "id": "990a76ac-4005-4599-83fc-c09770c6a552",
+  "replacement": "Def_Arm64_Syscalls_Common",
+  "replacement_id": "30b1fce0-9d24-4aad-9cdf-33a14121f810",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:27.092+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Drivers_Random": {
+  "id": "e7586603-e543-482e-93b0-53816dab442c",
+  "replacement": "Def_Arm64_Syscalls_Drivers_Random",
+  "replacement_id": "42af8471-9bc0-4e4a-b08f-b058ce0a1f62",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:27.714+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_FileIo": {
+  "id": "2a0613cc-7c6a-4031-95d7-d112c3aef5f2",
+  "replacement": "Def_Arm64_Syscalls_FileIo",
+  "replacement_id": "d6900f67-13e5-446e-bff8-450962b5c988",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:28.336+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Fs_Fcntl": {
+  "id": "e3d5c290-be82-4e33-8c8e-29de5cb70c3f",
+  "replacement": "Def_Arm64_Syscalls_Fs_Fcntl",
+  "replacement_id": "de103287-4fc5-4ae4-a655-4f2fd28262f4",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:28.862+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Fs_Ioctl": {
+  "id": "3934218a-fb67-4e51-9d84-a7f030b29c31",
+  "replacement": "Def_Arm64_Syscalls_Fs_Ioctl",
+  "replacement_id": "7463c33e-77ac-425c-a2d5-0cd4bad5b4d2",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:29.5+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Fs_Open": {
+  "id": "298c38ce-301a-41ab-97e4-3db84dbbfa89",
+  "replacement": "Def_Arm64_Syscalls_Fs_Open",
+  "replacement_id": "67b2f26b-5107-4df4-8ea2-85643db2a02d",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:30.165+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Fs_ReadWrite": {
+  "id": "5f0aa547-0bd8-49d4-a799-ac056ae20705",
+  "replacement": "Def_Arm64_Syscalls_Fs_ReadWrite",
+  "replacement_id": "0170f141-7b0b-4eb8-a743-773f5abad152",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:30.836+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Fs_ReadWritev": {
+  "id": "df463a55-4b1b-4112-b5bc-8cc27a9300fd",
+  "replacement": "Def_Arm64_Syscalls_Fs_ReadWritev",
+  "replacement_id": "0a0248f3-64ec-4441-b0c9-e160ff7023ac",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:31.44+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Fs_Select": {
+  "id": "8079010d-07b2-44df-bd84-463c549bb8d5",
+  "replacement": "Def_Arm64_Syscalls_Fs_Select",
+  "replacement_id": "bb08f52f-063c-4b2c-836d-0088cd70a128",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:32.07+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Fs_Stat": {
+  "id": "fa0dd851-63df-427b-96ec-d1d818df52bf",
+  "replacement": "Def_Arm64_Syscalls_Fs_Stat",
+  "replacement_id": "40647764-5103-4bde-9d77-44e4bc1c24f8",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:32.725+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Include_Errno": {
+  "id": "07827c32-6fac-4b57-92eb-aac2f799f41e",
+  "replacement": "Def_Arm64_Syscalls_Include_Errno",
+  "replacement_id": "2ef1f2c3-0438-439b-b9c2-7e12a4ea5e7b",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:33.387+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Include_Uapi": {
+  "id": "a773431b-dfea-46fd-b1c9-880d494eb4bc",
+  "replacement": "Def_Arm64_Syscalls_Include_Uapi",
+  "replacement_id": "9e797d10-9f08-486c-bdd0-6c23050a795b",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:33.933+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Kernel_Exit": {
+  "id": "7dbfa7b9-33a7-44ea-9e02-bb7f55eac8d5",
+  "replacement": "Def_Arm64_Syscalls_Kernel_Exit",
+  "replacement_id": "f964f587-a97b-4a0d-acf3-b3d949eaa309",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:34.497+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Kernel_Signal": {
+  "id": "5184809b-d046-4d90-804f-ff1341f4c524",
+  "replacement": "Def_Arm64_Syscalls_Kernel_Signal",
+  "replacement_id": "f9aec4c1-e06d-465c-bce7-095ba42d7878",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:35.09+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Kernel_Sys": {
+  "id": "26bcb2e1-347f-4750-a27d-09676116c8e1",
+  "replacement": "Def_Arm64_Syscalls_Kernel_Sys",
+  "replacement_id": "7d7ad05f-c255-40ef-82c4-7e7324ba80f4",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:35.637+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Kernel_Time": {
+  "id": "9b97b158-070f-46c6-84bf-6edf4e873e9c",
+  "replacement": "Def_Arm64_Syscalls_Kernel_Time",
+  "replacement_id": "ce1d60ef-2f5c-4b30-a54a-93f559498245",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:36.345+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Misc": {
+  "id": "dbd718c3-f5c3-4aaa-81e4-44d181adbcf1",
+  "replacement": "Def_Arm64_Syscalls_Misc",
+  "replacement_id": "57a65fbd-bdd7-436d-b413-39b749e093d7",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:37.006+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Mm_Madvise": {
+  "id": "54677287-52a0-4d6b-89cd-f8e722569a07",
+  "replacement": "Def_Arm64_Syscalls_Mm_Madvise",
+  "replacement_id": "ec7565f3-23c8-47d9-a351-dba49a6fac1a",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:37.665+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Mm_Mmap": {
+  "id": "c7139d19-6cbe-4290-bfa3-148ca8c42a43",
+  "replacement": "Def_Arm64_Syscalls_Mm_Mmap",
+  "replacement_id": "682ff419-a3ec-4b93-891c-522bafef022a",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:38.298+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Mm_Mprotect": {
+  "id": "7a60bcc0-d5c8-4a06-844e-3b15589e3cf9",
+  "replacement": "Def_Arm64_Syscalls_Mm_Mprotect",
+  "replacement_id": "f4145350-bd23-4156-b9a6-f0fb0dda6382",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:38.988+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Mm_Mremap": {
+  "id": "7adfde36-692b-4ed1-ad18-6d0a308d4877",
+  "replacement": "Def_Arm64_Syscalls_Mm_Mremap",
+  "replacement_id": "d313ddf4-d463-4e23-ba0c-205bfd590041",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:39.525+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Poll": {
+  "id": "8c31e4f9-cf06-4cc8-b9e6-524c5bbcfc94",
+  "replacement": "Def_Arm64_Syscalls_Poll",
+  "replacement_id": "e0d5e985-843c-41e7-bf76-a9c10a0c4643",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:40.076+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Random": {
+  "id": "4b342021-3b20-4a7f-b136-3d8b37718587",
+  "replacement": "Def_Arm64_Syscalls_Random",
+  "replacement_id": "227fa632-971e-492f-8b10-337c53388b66",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:40.676+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Signals": {
+  "id": "845f9cff-53bc-44be-9ec5-55e4074376cb",
+  "replacement": "Def_Arm64_Syscalls_Signals",
+  "replacement_id": "9eda9354-dd97-4f82-8e1b-f8740590dd0f",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:41.302+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Stdio": {
+  "id": "ad4e2723-0e14-4d89-ad34-6749007a5d39",
+  "replacement": "Def_Arm64_Syscalls_Stdio",
+  "replacement_id": "775e1c73-ff58-48b9-9155-0871df27c472",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:41.897+00:00",
+  "err": null
+ },
+ "P2mProbeArm64_Syscalls_Time": {
+  "id": "f9138d21-c91d-471b-b3a0-1c71d093084b",
+  "replacement": "Def_Arm64_Syscalls_Time",
+  "replacement_id": "af0fc963-7893-4370-a137-d04071bc4238",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:42.422+00:00",
+  "err": null
+ },
+ "P2mProbeZlibCrc32_PlacedObj": {
+  "id": "4a5f9f0e-ce8a-47a8-a8b2-f4eebd206f8a",
+  "replacement": "Def_ZlibCrc32_PlacedObj",
+  "replacement_id": "f1e50ea2-4c74-43c1-866e-058ea3896ac1",
+  "deprecated": null,
+  "deprecated_at": "2026-11-22T01:44:43.077+00:00",
+  "err": null
+ }
+}
