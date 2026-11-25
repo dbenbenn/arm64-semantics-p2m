@@ -1,3 +1,4 @@
 .lake/
 dryrun/log.txt
 code-verification/
+tools/rust-obj2lean/work/

@@ -70,6 +70,17 @@ its Apache header:
   `P2mProbeArm64`, dependencies first, so the platform's compile and scanner can be tested
   before a real Submit.
 
+## The object-file exporter (rust-obj2lean)
+
+Missions turn compiled objects into `PlacedLib` bundles with DeepMind's `rust-obj2lean` (same
+upstream commit). One change was needed for objects built with branch protection, such as
+Debian's arm64 packages: GCC then emits an allocated `.note.gnu.property` section (loader
+metadata marking the code BTI/PAC-compatible, read by no instruction), which the upstream
+exporter rejects ("unsupported allocated section"). `tools/rust-obj2lean/skip-note-sections.patch`
+makes it skip ELF note sections the way it already skips `.eh_frame`, and adds a regression test;
+`tools/rust-obj2lean/build.sh [WORKDIR]` clones upstream at `8c8d371f`, applies the patch and
+builds the binary. The change is offered upstream as a pull request.
+
 ## Later upstream versions
 
 Published bundles are frozen, so a later upstream revision cannot replace these. It would go
