@@ -79,7 +79,7 @@ metadata marking the code BTI/PAC-compatible, read by no instruction), which the
 exporter rejects ("unsupported allocated section"). `tools/rust-obj2lean/skip-note-sections.patch`
 makes it skip ELF note sections the way it already skips `.eh_frame`, and adds a regression test;
 `tools/rust-obj2lean/build.sh [WORKDIR]` clones upstream at `8c8d371f`, applies the patch and
-builds the binary. The change is offered upstream as a pull request.
+builds the binary. The change is offered upstream as [issue #6](https://github.com/google-deepmind/code-verification/issues/6).
 
 ## Later upstream versions
 
